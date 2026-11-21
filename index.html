@@ -142,13 +142,6 @@ function renderItems(){
  document.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',()=>deleteItem(el.dataset.delete)));
 }
 
- const todo=items.filter(x=>!x.is_checked),checked=items.filter(x=>x.is_checked);
- <div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}${x.category_id?' · '+esc(categoryName(x.category_id)):''}${x.note?' · '+esc(x.note):''}</div>
- <div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}${x.category_id?' · '+esc(categoryName(x.category_id)):''}</div>
- show($('todoEmpty'),todo.length===0);show($('checkedEmpty'),checked.length===0);
- document.querySelectorAll('[data-check]').forEach(el=>el.addEventListener('change',()=>toggleItem(el.dataset.check,el.checked)));
- document.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',()=>deleteItem(el.dataset.delete)));
-}
 async function addItem(){
  const name=$('newItem').value.trim(),qty=Number($('newQty').value)||1,cat=$('newCategory').value;
  if(!name){$('newItem').focus();return;}
