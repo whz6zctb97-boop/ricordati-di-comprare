@@ -187,7 +187,10 @@ function switchPage(page){currentPage=page;['list','pantry','offers','history'].
 async function refresh(){clearMessage('globalMsg');await loadAll();}
 function startRealtime(){
  if(channel)db.removeChannel(channel);
- channel=db.channel('shopping-live-'+currentUser()).on('postgres_changes',{event:'*',schema:'public',table:'shopping_items',filter:`user_id=eq.${currentUser()}`},()=>refresh().catch(e=>fail(e,'Sincronizzazione non riuscita'))).subscribe();
+ channel=db.channel('shopping-live-'+currentUser())
+  .on('postgres_changes',{event:'*',schema:'public',table:'shopping_items',filter:`user_id=eq.${currentUser()}`},()=>refresh().catch(e=>fail(e,'Sincronizzazione lista non riuscita')))
+  .on('postgres_changes',{event:'*',schema:'public',table:'pantry_items',filter:`user_id=eq.${currentUser()}`},()=>loadPantry().catch(e=>fail(e,'Sincronizzazione dispensa non riuscita')))
+  .subscribe();
 }
 async function showApp(){
  show($('authView'),false);show($('appView'),true);$('welcome').textContent=user.email||'La spesa di casa';
