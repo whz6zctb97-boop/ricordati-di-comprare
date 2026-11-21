@@ -159,7 +159,7 @@ async function toggleItem(id,checked){
  }catch(e){fail(e,'Non riesco ad aggiornare il prodotto');await refreshItems().catch(()=>{});}
 }
 async function deleteItem(id){try{const {error}=await db.from('shopping_items').delete().eq('id',id).eq('user_id',currentUser());if(error)throw error;await refreshItems();await loadHistory();}catch(e){fail(e,'Non riesco a eliminare il prodotto');}}
-async function clearChecked(){try{const ids=items.filter(x=>x.is_checked).map(x=>x.id);if(!ids.length)return;const {error}=await db.from('shopping_items').delete().in('id',ids).eq('user_id',currentUser());if(error)throw error;await refreshItems();}catch(e){fail(e,'Non riesco a svuotare gli acquistati');}}
+async function clearChecked(){try{const ids=items.filter(x=>x.is_checked).map(x=>x.id);if(!ids.length)return;const {error}=await db.from('shopping_items').delete().in('id',ids).eq('user_id',currentUser());if(error)throw error;await refreshItems();await loadHistory();}catch(e){fail(e,'Non riesco a svuotare gli acquistati');}}
 function renderPantry(){
  $('pantryList').innerHTML=pantry.map(x=>`<div class="item"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">Quantità: ${esc(x.quantity)} ${esc(x.unit||'pz')}</div></div><button class="btn secondary" style="padding:8px 10px;font-size:12px" data-to-list="${x.id}">In lista</button><button class="iconbtn" data-pdel="${x.id}">✕</button></div>`).join('');
  show($('pantryEmpty'),pantry.length===0);
