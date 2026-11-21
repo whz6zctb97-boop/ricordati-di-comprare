@@ -154,7 +154,7 @@ async function toggleItem(id,checked){
  try{
   const item=items.find(x=>x.id===id);if(!item)return;
   const {error}=await db.from('shopping_items').update({is_checked:checked,checked_at:checked?new Date().toISOString():null}).eq('id',id).eq('user_id',currentUser());if(error)throw error;
-  if(checked){const h=await db.from('shopping_history').insert({user_id:currentUser(),list_id:activeList.id,item_id:id,product_id:item.product_id,product_name:item.product_name,quantity:item.quantity,unit:item.unit});if(h.error)console.warn('Storico non aggiornato',h.error);}
+  if(checked){const h=await db.from('shopping_history').upsert({user_id:currentUser(),list_id:activeList.id,item_id:id,product_id:item.product_id,product_name:item.product_name,quantity:item.quantity,unit:item.unit,purchased_at:new Date().toISOString()},{onConflict:'list_id,item_id'});if(h.error)throw h.error;}
   await refreshItems();await loadHistory();
  }catch(e){fail(e,'Non riesco ad aggiornare il prodotto');await refreshItems().catch(()=>{});}
 }
