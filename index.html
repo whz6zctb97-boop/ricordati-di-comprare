@@ -134,8 +134,8 @@ function productFor(name){return products.find(p=>p.name.toLocaleLowerCase('it')
 function categoryName(id){return categories.find(c=>c.id===id)?.name||'Altro';}
 function renderItems(){
  const todo=items.filter(x=>!x.is_checked),checked=items.filter(x=>x.is_checked);
- $('todoList').innerHTML=todo.map(x=>`<div class="item"><input class="check" type="checkbox" data-check="${x.id}" aria-label="Segna acquistato"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}${x.note?' · '+esc(x.note):''}</div></div><button class="iconbtn" data-delete="${x.id}" aria-label="Elimina">✕</button></div>`).join('');
- $('checkedList').innerHTML=checked.map(x=>`<div class="item done"><input class="check" type="checkbox" checked data-check="${x.id}" aria-label="Togli spunta"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}</div></div><button class="iconbtn" data-delete="${x.id}" aria-label="Elimina">✕</button></div>`).join('');
+ <div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}${x.category_id?' · '+esc(categoryName(x.category_id)):''}${x.note?' · '+esc(x.note):''}</div>
+ <div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}${x.category_id?' · '+esc(categoryName(x.category_id)):''}</div>
  show($('todoEmpty'),todo.length===0);show($('checkedEmpty'),checked.length===0);
  document.querySelectorAll('[data-check]').forEach(el=>el.addEventListener('change',()=>toggleItem(el.dataset.check,el.checked)));
  document.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',()=>deleteItem(el.dataset.delete)));
