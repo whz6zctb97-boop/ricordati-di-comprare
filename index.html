@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f2e9">
+<meta name="description" content="La lista della spesa e la dispensa di casa, sempre sincronizzate.">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>Ricordati di comprare…</title>
+<style>
+:root{--bg:#f5f2e9;--paper:#fffefa;--ink:#242a25;--muted:#737b72;--green:#315d45;--green2:#e3eee4;--orange:#f2a65a;--line:#e7e4da;--red:#b94b40;--shadow:0 10px 28px #28372b12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:760px;margin:auto;padding:18px 16px 30px}.top{display:flex;justify-content:space-between;align-items:center;margin:5px 0 20px}.brand{display:flex;align-items:center;gap:11px}.logo{width:43px;height:43px;border-radius:15px;background:var(--green);display:grid;place-items:center;color:white;font-size:23px}.brand h1{font-size:19px;line-height:1.05;margin:0}.brand small{color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px}.iconbtn{border:1px solid var(--line);background:var(--paper);border-radius:13px;padding:9px 11px;color:var(--ink)}.hero{background:var(--green);color:white;border-radius:23px;padding:20px;margin-bottom:17px;box-shadow:var(--shadow)}.hero .eyebrow{font-size:12px;opacity:.78;letter-spacing:.08em;text-transform:uppercase}.hero h2{font-size:25px;line-height:1.12;margin:5px 0 8px}.hero p{margin:0;color:#e1eadf;font-size:14px}.stats{display:flex;gap:10px;margin-top:17px}.stat{background:#ffffff18;border:1px solid #ffffff22;border-radius:14px;padding:9px 12px;min-width:92px}.stat b{display:block;font-size:20px}.stat span{font-size:11px;color:#e1eadf}.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:16px;margin:13px 0;box-shadow:var(--shadow)}.row{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.section-title{font-size:17px;margin:0 0 12px}.muted{color:var(--muted)}.small{font-size:12px}.field{width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px 13px;outline:none;color:var(--ink)}.field:focus{border-color:var(--green);box-shadow:0 0 0 3px #315d4518}.addrow{display:grid;grid-template-columns:1fr auto;gap:8px}.btn{border:0;border-radius:13px;background:var(--green);color:#fff;padding:12px 16px;font-weight:650}.btn:disabled{opacity:.5;cursor:not-allowed}.btn.secondary{background:var(--green2);color:var(--green)}.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}.btn.danger{background:#f8e8e5;color:var(--red)}.tabs{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#fffefaee;backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:9px 10px calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:5px}.tab{flex:1;max-width:150px;border:0;background:transparent;color:var(--muted);padding:8px 4px;border-radius:13px;font-size:11px}.tab span{display:block;font-size:20px;margin-bottom:2px}.tab.active{background:var(--green2);color:var(--green);font-weight:700}.item{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.check{width:23px;height:23px;accent-color:var(--green);flex:0 0 auto}.itemmain{flex:1;min-width:0}.itemname{font-weight:650;overflow-wrap:anywhere}.itemmeta{font-size:12px;color:var(--muted)}.done .itemname{text-decoration:line-through;color:#969b93}.pill{font-size:11px;border-radius:20px;background:#f1eee5;padding:4px 8px;color:var(--muted)}.empty{text-align:center;padding:26px 12px;color:var(--muted)}.empty .emoji{font-size:32px}.category{margin:15px 0 6px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}.auth{max-width:430px;margin:8vh auto;padding:22px}.auth h2{font-size:26px;margin:0 0 5px}.auth p{color:var(--muted);margin-top:0}.stack{display:grid;gap:10px}.notice{border-radius:13px;padding:11px 13px;background:#fff3d9;color:#78551c;font-size:13px;margin:12px 0}.error{background:#fae9e6;color:#913b33}.success{background:#e5f1e5;color:#315d45}.hidden{display:none!important}.list-offer{padding:12px 0;border-bottom:1px solid var(--line)}.list-offer:last-child{border:0}.price{font-size:19px;font-weight:800;color:var(--green)}.tag{font-size:11px;background:#f4eee2;padding:4px 8px;border-radius:20px}.footer{text-align:center;color:var(--muted);font-size:11px;margin:24px 0 5px}
+@media(min-width:600px){.shell{padding-top:28px}.hero{padding:25px}.hero h2{font-size:30px}}
+</style>
+</head>
+<body>
+<div id="authView" class="auth card">
+  <div class="brand" style="margin-bottom:20px"><div class="logo">🛒</div><div><h1>Ricordati di comprare…</h1><small>La spesa di casa, in ordine</small></div></div>
+  <h2>Bentornato!</h2><p>Accedi per ritrovare la lista e la dispensa sincronizzate.</p>
+  <div class="stack">
+    <input id="email" class="field" type="email" autocomplete="email" placeholder="La tua email">
+    <input id="password" class="field" type="password" autocomplete="current-password" placeholder="Password (almeno 6 caratteri)">
+    <button id="loginBtn" class="btn">Accedi</button>
+    <button id="signupBtn" class="btn secondary">Crea un account</button>
+    <div id="authMsg" class="notice hidden"></div>
+  </div>
+  <p class="small" style="margin-top:18px">Per usare l'app su più telefoni, accedi con lo stesso account su ciascun dispositivo. Non condividere la password con persone esterne alla famiglia.</p>
+</div>
+
+<div id="appView" class="hidden">
+  <main class="shell">
+    <header class="top">
+      <div class="brand"><div class="logo">🛒</div><div><h1>Ricordati di comprare…</h1><small id="welcome">La spesa di casa</small></div></div>
+      <div class="top-actions"><button class="iconbtn" id="refreshBtn" aria-label="Aggiorna">↻</button><button class="iconbtn" id="logoutBtn" aria-label="Esci">Esci</button></div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">Piccole cose, zero dimenticanze</div>
+      <h2 id="heroTitle">Cosa manca a casa?</h2>
+      <p id="heroText">Aggiungi quello che serve e spunta gli articoli mentre fai la spesa.</p>
+      <div class="stats"><div class="stat"><b id="remainingCount">0</b><span>da comprare</span></div><div class="stat"><b id="pantryCount">0</b><span>in dispensa</span></div></div>
+    </section>
+    <div id="globalMsg" class="notice hidden"></div>
+
+    <section id="page-list">
+      <div class="card">
+        <div class="row between"><h3 class="section-title">La lista di casa</h3><span class="pill" id="listLabel">Lista attiva</span></div>
+        <div class="addrow"><input id="newItem" class="field" placeholder="Es. latte, pane, mele…" autocomplete="off"><button id="addItemBtn" class="btn">Aggiungi</button></div>
+        <div class="row" style="margin-top:9px"><select id="newCategory" class="field"><option value="">Categoria (facoltativa)</option></select><input id="newQty" class="field" style="max-width:100px" type="number" min="0.1" step="0.1" value="1" aria-label="Quantità"></div>
+      </div>
+      <div class="card">
+        <div class="row between"><h3 class="section-title">Da comprare</h3><span class="pill" id="todoPill">0 articoli</span></div>
+        <div id="todoList"></div>
+        <div id="todoEmpty" class="empty"><div class="emoji">🧺</div>La lista è vuota. Aggiungi il primo prodotto!</div>
+      </div>
+      <div class="card">
+        <div class="row between"><h3 class="section-title">Già nel carrello</h3><button id="clearCheckedBtn" class="btn ghost" style="padding:7px 10px;font-size:12px">Svuota acquistati</button></div>
+        <div id="checkedList"></div><div id="checkedEmpty" class="empty">Nessun prodotto spuntato.</div>
+      </div>
+    </section>
+
+    <section id="page-pantry" class="hidden">
+      <div class="card"><h3 class="section-title">La nostra dispensa</h3><p class="muted small">Tieni sotto controllo quello che hai già in casa.</p>
+        <div class="addrow"><input id="pantryName" class="field" placeholder="Aggiungi un prodotto"><button id="addPantryBtn" class="btn">Aggiungi</button></div>
+        <div class="row" style="margin-top:9px"><input id="pantryQty" class="field" type="number" min="0" step="0.1" value="1" aria-label="Quantità"><input id="pantryUnit" class="field" placeholder="Unità (pz, kg, l)" value="pz"></div>
+      </div>
+      <div class="card"><div id="pantryList"></div><div id="pantryEmpty" class="empty"><div class="emoji">🥫</div>La dispensa è ancora vuota.</div></div>
+    </section>
+
+    <section id="page-offers" class="hidden">
+      <div class="card"><h3 class="section-title">Offerte disponibili</h3><p class="muted small">Mostriamo soltanto offerte presenti nel database. La disponibilità e la data vanno sempre verificate sul volantino del negozio.</p><div id="offersList"></div><div id="offersEmpty" class="empty"><div class="emoji">🏷️</div>Non ci sono offerte verificate da mostrare al momento.</div></div>
+    </section>
+
+    <section id="page-history" class="hidden">
+      <div class="card"><h3 class="section-title">Ultimi acquisti</h3><p class="muted small">Quando spunti un prodotto, viene registrato nello storico.</p><div id="historyList"></div><div id="historyEmpty" class="empty"><div class="emoji">📒</div>Lo storico si riempirà con i tuoi acquisti.</div></div>
+      <div class="card"><h3 class="section-title">Prezzi ricordati</h3><div class="addrow"><input id="priceName" class="field" placeholder="Prodotto"><input id="priceValue" class="field" type="number" min="0.01" step="0.01" placeholder="€"></div><div class="row" style="margin-top:9px"><input id="priceStore" class="field" placeholder="Negozio (facoltativo)"><button id="savePriceBtn" class="btn">Salva</button></div><p class="small muted">Annotazione manuale del prezzo pagato.</p><div id="priceMsg" class="small muted"></div></div>
+    </section>
+    <div class="footer">I tuoi dati sono salvati su Supabase. Ricordati di comprare… 🧡</div>
+  </main>
+  <nav class="tabs">
+    <button class="tab active" data-page="list"><span>📝</span>Lista</button>
+    <button class="tab" data-page="pantry"><span>🥫</span>Dispensa</button>
+    <button class="tab" data-page="offers"><span>🏷️</span>Offerte</button>
+    <button class="tab" data-page="history"><span>📒</span>Storico</button>
+  </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+'use strict';
+const SUPABASE_URL = 'https://mvmjscrchtbedtawlert.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_32-wSeBBoyvnOpufiLhZMg_Xyiiq-BH';
+const $ = id => document.getElementById(id);
+const show = (el, yes=true) => el.classList.toggle('hidden', !yes);
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(Number(n)||0);
+let db, user, activeList=null, products=[], categories=[], items=[], pantry=[], offers=[], history=[], channel=null;
+let currentPage='list';
+
+function message(id,text,type='notice'){const el=$(id);el.textContent=text;el.className='notice '+(type==='error'?'error':type==='success'?'success':'');}
+function clearMessage(id){show($(id),false);}
+function fail(err,where='Operazione non riuscita'){console.error(where,err);message('globalMsg',`${where}: ${err?.message || 'controlla la connessione e riprova'}`,'error');}
+function setBusy(button,busy,label){button.disabled=busy;if(busy)button.dataset.old=button.textContent;button.textContent=busy?'Attendi…':(button.dataset.old||label||button.textContent);}
+function currentUser(){return user?.id;}
+async function ensureList(){
+ const {data,error}=await db.from('shopping_lists').select('*').eq('user_id',currentUser()).eq('status','active').order('created_at',{ascending:false}).limit(1);
+ if(error)throw error;
+ activeList=data?.[0]||null;
+ if(!activeList){const made=await db.from('shopping_lists').insert({user_id:currentUser(),title:'Lista della spesa',status:'active'}).select().single();if(made.error)throw made.error;activeList=made.data;}
+}
+async function loadBase(){
+ const [p,c]=await Promise.all([
+  db.from('products').select('id,name,category_id,default_unit').eq('is_active',true).order('name').limit(1000),
+  db.from('categories').select('id,name,icon,sort_order').order('sort_order')
+ ]);
+ if(p.error)throw p.error;if(c.error)throw c.error;products=p.data||[];categories=c.data||[];
+ $('newCategory').innerHTML='<option value="">Categoria (facoltativa)</option>'+categories.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+}
+async function loadAll(){
+ await ensureList(); await loadBase();
+ const [i,pa,o,h]=await Promise.all([
+  db.from('shopping_items').select('*').eq('list_id',activeList.id).eq('user_id',currentUser()).order('created_at'),
+  db.from('pantry_items').select('*').eq('user_id',currentUser()).order('product_name'),
+  db.from('offers').select('id,product_name,description,price,original_price,unit_label,starts_at,ends_at,source_url,checked_at,store_id').order('checked_at',{ascending:false}).limit(100),
+  db.from('shopping_history').select('*').eq('user_id',currentUser()).order('purchased_at',{ascending:false}).limit(60)
+ ]);
+ for(const r of [i,pa,o,h])if(r.error)throw r.error;
+ items=i.data||[];pantry=pa.data||[];offers=o.data||[];history=h.data||[];
+ renderAll();
+}
+function renderAll(){renderItems();renderPantry();renderOffers();renderHistory();$('remainingCount').textContent=items.filter(x=>!x.is_checked).length;$('pantryCount').textContent=pantry.length;$('todoPill').textContent=items.filter(x=>!x.is_checked).length+' articoli';}
+function productFor(name){return products.find(p=>p.name.toLocaleLowerCase('it')===name.trim().toLocaleLowerCase('it'));}
+function categoryName(id){return categories.find(c=>c.id===id)?.name||'Altro';}
+function renderItems(){
+ const todo=items.filter(x=>!x.is_checked),checked=items.filter(x=>x.is_checked);
+ $('todoList').innerHTML=todo.map(x=>`<div class="item"><input class="check" type="checkbox" data-check="${x.id}" aria-label="Segna acquistato"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}${x.note?' · '+esc(x.note):''}</div></div><button class="iconbtn" data-delete="${x.id}" aria-label="Elimina">✕</button></div>`).join('');
+ $('checkedList').innerHTML=checked.map(x=>`<div class="item done"><input class="check" type="checkbox" checked data-check="${x.id}" aria-label="Togli spunta"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">${esc(x.quantity)} ${esc(x.unit||'pz')}</div></div><button class="iconbtn" data-delete="${x.id}" aria-label="Elimina">✕</button></div>`).join('');
+ show($('todoEmpty'),todo.length===0);show($('checkedEmpty'),checked.length===0);
+ document.querySelectorAll('[data-check]').forEach(el=>el.addEventListener('change',()=>toggleItem(el.dataset.check,el.checked)));
+ document.querySelectorAll('[data-delete]').forEach(el=>el.addEventListener('click',()=>deleteItem(el.dataset.delete)));
+}
+async function addItem(){
+ const name=$('newItem').value.trim(),qty=Number($('newQty').value)||1,cat=$('newCategory').value;
+ if(!name){$('newItem').focus();return;}
+ const product=productFor(name);
+ const payload={user_id:currentUser(),list_id:activeList.id,product_id:product?.id||null,product_name:name,quantity:qty,unit:product?.default_unit||'pz',is_checked:false};
+ const {error}=await db.from('shopping_items').insert(payload);if(error)throw error;
+ $('newItem').value='';$('newQty').value='1';$('newCategory').value='';
+ await refreshItems();
+}
+async function refreshItems(){const {data,error}=await db.from('shopping_items').select('*').eq('list_id',activeList.id).eq('user_id',currentUser()).order('created_at');if(error)throw error;items=data||[];renderAll();}
+async function toggleItem(id,checked){
+ try{
+  const item=items.find(x=>x.id===id);if(!item)return;
+  const {error}=await db.from('shopping_items').update({is_checked:checked,checked_at:checked?new Date().toISOString():null}).eq('id',id).eq('user_id',currentUser());if(error)throw error;
+  if(checked){const h=await db.from('shopping_history').insert({user_id:currentUser(),list_id:activeList.id,item_id:id,product_id:item.product_id,product_name:item.product_name,quantity:item.quantity,unit:item.unit});if(h.error)console.warn('Storico non aggiornato',h.error);}
+  await refreshItems();await loadHistory();
+ }catch(e){fail(e,'Non riesco ad aggiornare il prodotto');await refreshItems().catch(()=>{});}
+}
+async function deleteItem(id){try{const {error}=await db.from('shopping_items').delete().eq('id',id).eq('user_id',currentUser());if(error)throw error;await refreshItems();}catch(e){fail(e,'Non riesco a eliminare il prodotto');}}
+async function clearChecked(){try{const ids=items.filter(x=>x.is_checked).map(x=>x.id);if(!ids.length)return;const {error}=await db.from('shopping_items').delete().in('id',ids).eq('user_id',currentUser());if(error)throw error;await refreshItems();}catch(e){fail(e,'Non riesco a svuotare gli acquistati');}}
+function renderPantry(){
+ $('pantryList').innerHTML=pantry.map(x=>`<div class="item"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">Quantità: ${esc(x.quantity)} ${esc(x.unit||'pz')}</div></div><button class="btn secondary" style="padding:8px 10px;font-size:12px" data-to-list="${x.id}">In lista</button><button class="iconbtn" data-pdel="${x.id}">✕</button></div>`).join('');
+ show($('pantryEmpty'),pantry.length===0);
+ document.querySelectorAll('[data-to-list]').forEach(b=>b.addEventListener('click',()=>pantryToList(b.dataset.toList)));
+ document.querySelectorAll('[data-pdel]').forEach(b=>b.addEventListener('click',()=>deletePantry(b.dataset.pdel)));
+}
+async function loadPantry(){const r=await db.from('pantry_items').select('*').eq('user_id',currentUser()).order('product_name');if(r.error)throw r.error;pantry=r.data||[];renderAll();}
+async function addPantry(){const name=$('pantryName').value.trim();if(!name)return;const qty=Number($('pantryQty').value)||1,unit=$('pantryUnit').value.trim()||'pz',p=productFor(name);const {error}=await db.from('pantry_items').insert({user_id:currentUser(),product_id:p?.id||null,product_name:name,quantity:qty,unit});if(error)throw error;$('pantryName').value='';await loadPantry();}
+async function deletePantry(id){const {error}=await db.from('pantry_items').delete().eq('id',id).eq('user_id',currentUser());if(error)throw error;await loadPantry();}
+async function pantryToList(id){const p=pantry.find(x=>x.id===id);if(!p)return;const {error}=await db.from('shopping_items').insert({user_id:currentUser(),list_id:activeList.id,product_id:p.product_id,product_name:p.product_name,quantity:1,unit:p.unit||'pz'});if(error)throw error;await refreshItems();switchPage('list');}
+function renderOffers(){
+ const now=new Date().toISOString().slice(0,10),valid=offers.filter(o=>(!o.ends_at||o.ends_at>=now)&&(!o.starts_at||o.starts_at<=now));
+ $('offersList').innerHTML=valid.map(o=>`<div class="list-offer"><div class="row between"><b>${esc(o.product_name)}</b><span class="price">${money(o.price)}</span></div>${o.description?`<div class="small muted">${esc(o.description)}</div>`:''}<div class="row between" style="margin-top:6px"><span class="small muted">${o.original_price?`Prima ${money(o.original_price)} · `:''}${esc(o.unit_label||'')}</span>${o.source_url?`<a class="tag" href="${esc(o.source_url)}" target="_blank" rel="noopener">Ver fonte ↗</a>`:'<span class="tag">Fonte non disponibile</span>'}</div><div class="small muted">Verificata: ${o.checked_at?new Date(o.checked_at).toLocaleDateString('it-IT'):'data non disponibile'}</div></div>`).join('');
+ show($('offersEmpty'),valid.length===0);
+}
+async function loadHistory(){const [h,p]=await Promise.all([db.from('shopping_history').select('*').eq('user_id',currentUser()).order('purchased_at',{ascending:false}).limit(60),db.from('price_history').select('*').eq('user_id',currentUser()).order('recorded_at',{ascending:false}).limit(20)]);if(h.error)throw h.error;if(p.error)throw p.error;history=h.data||[];renderHistory(p.data||[]);}
+function renderHistory(prices=[]){
+ $('historyList').innerHTML=history.map(x=>`<div class="item"><div class="itemmain"><div class="itemname">${esc(x.product_name)}</div><div class="itemmeta">${new Date(x.purchased_at).toLocaleString('it-IT',{dateStyle:'medium',timeStyle:'short'})} · ${esc(x.quantity)} ${esc(x.unit||'pz')}</div></div></div>`).join('');
+ show($('historyEmpty'),history.length===0);
+ $('priceMsg').innerHTML=prices.map(x=>`${esc(x.product_name)} · <b>${money(x.price)}</b> · ${new Date(x.recorded_at).toLocaleDateString('it-IT')}`).join('<br>')||'Nessun prezzo annotato.';
+}
+async function savePrice(){const name=$('priceName').value.trim(),price=Number($('priceValue').value);if(!name||!(price>0))throw new Error('Inserisci prodotto e prezzo valido.');const p=productFor(name);let storeId=null;const storeName=$('priceStore').value.trim();if(storeName){const found=await db.from('stores').select('id').ilike('name',storeName).limit(1).maybeSingle();if(found.error)throw found.error;storeId=found.data?.id||null;}
+ const {error}=await db.from('price_history').insert({user_id:currentUser(),product_id:p?.id||null,product_name:name,store_id:storeId,price});if(error)throw error;$('priceName').value='';$('priceValue').value='';$('priceStore').value='';await loadHistory();message('globalMsg','Prezzo salvato nello storico.','success');}
+function switchPage(page){currentPage=page;['list','pantry','offers','history'].forEach(p=>show($('page-'+p),p===page));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.page===page));}
+async function refresh(){clearMessage('globalMsg');await loadAll();}
+function startRealtime(){
+ if(channel)db.removeChannel(channel);
+ channel=db.channel('shopping-live-'+currentUser()).on('postgres_changes',{event:'*',schema:'public',table:'shopping_items',filter:`user_id=eq.${currentUser()}`},()=>refresh().catch(e=>fail(e,'Sincronizzazione non riuscita'))).subscribe();
+}
+async function showApp(){
+ show($('authView'),false);show($('appView'),true);$('welcome').textContent=user.email||'La spesa di casa';
+ try{await loadAll();startRealtime();}catch(e){fail(e,'Non riesco a caricare i dati. Controlla che le tabelle e i permessi Supabase siano attivi.');}
+}
+async function signIn(signup){
+ const btn=signup?$('signupBtn'):$('loginBtn');setBusy(btn,true);
+ try{const email=$('email').value.trim(),password=$('password').value;if(!email||password.length<6)throw new Error('Inserisci email e password (almeno 6 caratteri).');
+  const result=signup?await db.auth.signUp({email,password}):await db.auth.signInWithPassword({email,password});if(result.error)throw result.error;
+  if(signup&&!result.data.session){message('authMsg','Account creato. Controlla la tua email e conferma la registrazione, poi torna qui per accedere.','success');show($('authMsg'));return;}
+  user=result.data.user;await showApp();
+ }catch(e){message('authMsg',e.message||'Errore di accesso.','error');show($('authMsg'));}finally{setBusy(btn,false,signup?'Crea un account':'Accedi');}
+}
+async function logout(){if(channel)await db.removeChannel(channel);await db.auth.signOut();user=null;show($('appView'),false);show($('authView'),true);}
+function bind(){
+ $('loginBtn').addEventListener('click',()=>signIn(false));$('signupBtn').addEventListener('click',()=>signIn(true));
+ $('password').addEventListener('keydown',e=>{if(e.key==='Enter')signIn(false)});$('email').addEventListener('keydown',e=>{if(e.key==='Enter')$('password').focus()});
+ $('logoutBtn').addEventListener('click',logout);$('refreshBtn').addEventListener('click',()=>refresh().catch(e=>fail(e,'Aggiornamento non riuscito')));
+ $('addItemBtn').addEventListener('click',()=>addItem().catch(e=>fail(e,'Non riesco ad aggiungere il prodotto')));$('newItem').addEventListener('keydown',e=>{if(e.key==='Enter')addItem().catch(x=>fail(x,'Non riesco ad aggiungere il prodotto'))});
+ $('clearCheckedBtn').addEventListener('click',clearChecked);$('addPantryBtn').addEventListener('click',()=>addPantry().catch(e=>fail(e,'Non riesco ad aggiornare la dispensa')));
+ $('savePriceBtn').addEventListener('click',()=>savePrice().catch(e=>fail(e,'Non riesco a salvare il prezzo')));
+ document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchPage(b.dataset.page)));
+}
+async function init(){
+ if(!window.supabase){message('authMsg','Non riesco a caricare il servizio di accesso. Controlla la connessione internet.','error');show($('authMsg'));return;}
+ db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ bind();const {data,error}=await db.auth.getSession();if(error){message('authMsg',error.message,'error');show($('authMsg'));return;}
+ user=data.session?.user||null;if(user)await showApp();
+ db.auth.onAuthStateChange((_event,session)=>{if(session?.user&&!user){user=session.user;showApp();}else if(!session?.user&&user){user=null;show($('appView'),false);show($('authView'),true);}});
+ if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(console.warn);
+}
+document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+</body>
+</html>
