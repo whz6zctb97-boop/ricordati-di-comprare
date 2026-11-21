@@ -144,7 +144,7 @@ async function addItem(){
  const name=$('newItem').value.trim(),qty=Number($('newQty').value)||1,cat=$('newCategory').value;
  if(!name){$('newItem').focus();return;}
  const product=productFor(name);
- const payload={user_id:currentUser(),list_id:activeList.id,product_id:product?.id||null,product_name:name,quantity:qty,unit:product?.default_unit||'pz',is_checked:false};
+ const payload={user_id:currentUser(),list_id:activeList.id,product_id:product?.id||null,category_id:cat||product?.category_id||null,product_name:name,quantity:qty,unit:product?.default_unit||'pz',is_checked:false};
  const {error}=await db.from('shopping_items').insert(payload);if(error)throw error;
  $('newItem').value='';$('newQty').value='1';$('newCategory').value='';
  await refreshItems();
